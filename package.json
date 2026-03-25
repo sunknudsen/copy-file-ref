@@ -1,0 +1,69 @@
+{
+  "name": "copy-file-ref",
+  "displayName": "Copy File Reference",
+  "description": "Copy relative path with line range to clipboard",
+  "version": "1.0.0",
+  "publisher": "local",
+  "license": "MIT",
+  "author": {
+    "name": "Sun Knudsen",
+    "email": "hello@sunknudsen.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunknudsen/copy-file-ref"
+  },
+  "categories": [
+    "Other"
+  ],
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onCommand:copy-file-ref.copy"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "copy-file-ref.copy",
+        "title": "Copy File Reference (path:line-line)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "copy-file-ref.copy",
+        "key": "ctrl+alt+shift+c",
+        "mac": "cmd+alt+ctrl+c",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "copy-file-ref.copy",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "copy-file-ref.copy",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.7.1"
+  },
+  "prettier": {
+    "endOfLine": "lf",
+    "printWidth": 80,
+    "semi": false,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  }
+}
