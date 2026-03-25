@@ -6,7 +6,7 @@ Copy relative path with line range to clipboard.
 
 ## Usage
 
-- **Keyboard shortcut:** `cmd+option+ctrl+c` (macOS) / `ctrl+alt+shift+c` (Windows/Linux) while the editor is focused
+- **Keyboard shortcut:** `cmd+option+shift+c` (macOS) / `ctrl+alt+shift+c` (Windows/Linux) while the editor is focused
 - **Right-click menu:** "Copy File Reference (path:line-line)" in the Explorer or editor context menu
 
 Select one or more lines before triggering the command to include the line range.

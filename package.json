@@ -2,7 +2,7 @@
   "name": "copy-file-ref",
   "displayName": "Copy File Reference",
   "description": "Copy relative path with line range to clipboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "local",
   "license": "MIT",
   "author": {
@@ -34,7 +34,7 @@
       {
         "command": "copy-file-ref.copy",
         "key": "ctrl+alt+shift+c",
-        "mac": "cmd+alt+ctrl+c",
+        "mac": "cmd+alt+shift+c",
         "when": "editorTextFocus"
       }
     ],
@@ -42,13 +42,13 @@
       "explorer/context": [
         {
           "command": "copy-file-ref.copy",
-          "group": "navigation"
+          "group": "9_cutcopypaste@10"
         }
       ],
       "editor/context": [
         {
           "command": "copy-file-ref.copy",
-          "group": "navigation"
+          "group": "9_cutcopypaste@10"
         }
       ]
     }
