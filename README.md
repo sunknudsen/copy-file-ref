@@ -1,13 +1,30 @@
-# Copy File Reference
+# Claude Code Utils
+
+Utilities for working with Claude Code.
+
+## Features
+
+### Copy Filename
+
+Copy the current file’s name to clipboard.
+
+**Output format:** `foo.ts`
+
+**Usage:**
+
+- **Keyboard shortcut:** `cmd+option+shift+f` (macOS) / `ctrl+alt+shift+f` (Windows/Linux)
+- **Right-click menu:** "Copy Filename"
+
+### Copy Code Reference
 
 Copy relative path with line range to clipboard.
 
 **Output format:** `src/foo.ts:42` or `src/foo.ts:42-58`
 
-## Usage
+**Usage:**
 
-- **Keyboard shortcut:** `cmd+option+shift+c` (macOS) / `ctrl+alt+shift+c` (Windows/Linux) while the editor is focused
-- **Right-click menu:** "Copy File Reference (path:line-line)" in the Explorer or editor context menu
+- **Keyboard shortcut:** `cmd+option+shift+c` (macOS) / `ctrl+alt+shift+c` (Windows/Linux)
+- **Right-click menu:** "Copy Code Reference"
 
 Select one or more lines before triggering the command to include the line range.
 
@@ -24,7 +41,7 @@ $ npm run package
 Then install the generated file:
 
 ```console
-$ code --install-extension copy-file-ref-*.vsix
+$ code --install-extension claude-code-utils-*.vsix
 ```
 
 Reload VS Code when prompted.

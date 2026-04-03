@@ -1,8 +1,8 @@
 {
-  "name": "copy-file-ref",
-  "displayName": "Copy File Reference",
-  "description": "Copy relative path with line range to clipboard",
-  "version": "1.0.1",
+  "name": "claude-code-utils",
+  "displayName": "Claude Code Utils",
+  "description": "Utilities for working with Claude Code",
+  "version": "1.0.2",
   "publisher": "local",
   "license": "MIT",
   "author": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sunknudsen/copy-file-ref"
+    "url": "https://github.com/sunknudsen/claude-code-utils"
   },
   "categories": [
     "Other"
@@ -21,18 +21,29 @@
   },
   "main": "./src/extension.js",
   "activationEvents": [
-    "onCommand:copy-file-ref.copy"
+    "onCommand:claude-code-utils.copyFileName",
+    "onCommand:claude-code-utils.copyCodeRef"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "copy-file-ref.copy",
-        "title": "Copy File Reference (path:line-line)"
+        "command": "claude-code-utils.copyFileName",
+        "title": "Copy Filename"
+      },
+      {
+        "command": "claude-code-utils.copyCodeRef",
+        "title": "Copy Code Reference"
       }
     ],
     "keybindings": [
       {
-        "command": "copy-file-ref.copy",
+        "command": "claude-code-utils.copyFileName",
+        "key": "ctrl+alt+shift+f",
+        "mac": "cmd+alt+shift+f",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "claude-code-utils.copyCodeRef",
         "key": "ctrl+alt+shift+c",
         "mac": "cmd+alt+shift+c",
         "when": "editorTextFocus"
@@ -41,14 +52,14 @@
     "menus": {
       "explorer/context": [
         {
-          "command": "copy-file-ref.copy",
+          "command": "claude-code-utils.copyFileName",
           "group": "9_cutcopypaste@10"
         }
       ],
       "editor/context": [
         {
-          "command": "copy-file-ref.copy",
-          "group": "9_cutcopypaste@10"
+          "command": "claude-code-utils.copyCodeRef",
+          "group": "z_claudeCodeUtils@1"
         }
       ]
     }
