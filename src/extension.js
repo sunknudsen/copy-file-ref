@@ -13,8 +13,12 @@ function activate(context) {
 
       // Get relative path from workspace root
       const workspaceFolder = vscode.workspace.getWorkspaceFolder(doc.uri)
+      const prefix =
+        vscode.workspace.workspaceFolders?.length > 1
+          ? `${workspaceFolder.name}/`
+          : ""
       const filePath = workspaceFolder
-        ? path.relative(workspaceFolder.uri.fsPath, doc.uri.fsPath)
+        ? prefix + path.relative(workspaceFolder.uri.fsPath, doc.uri.fsPath)
         : doc.uri.fsPath
 
       // Lines are 0-indexed internally, +1 for human-readable
