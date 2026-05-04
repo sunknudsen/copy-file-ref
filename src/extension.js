@@ -54,6 +54,31 @@ function activate(context) {
   )
 
   context.subscriptions.push(copyFileNameCmd)
+
+  const copyRelativeFilenameCmd = vscode.commands.registerCommand(
+    "claude-code-utils.copyRelativeFilename",
+    (uri) => {
+      // Use URI from context menu (explorer) or active editor
+      const fileUri = uri || vscode.window.activeTextEditor?.document.uri
+      if (!fileUri) return
+
+      // Get relative path from workspace root
+      const workspaceFolder = vscode.workspace.getWorkspaceFolder(fileUri)
+      const prefix =
+        vscode.workspace.workspaceFolders?.length > 1
+          ? `${workspaceFolder.name}/`
+          : ""
+      const filePath = workspaceFolder
+        ? prefix + path.relative(workspaceFolder.uri.fsPath, fileUri.fsPath)
+        : fileUri.fsPath
+
+      vscode.env.clipboard.writeText(filePath).then(() => {
+        vscode.window.setStatusBarMessage(`📋 Copied: ${filePath}`, 3000)
+      })
+    }
+  )
+
+  context.subscriptions.push(copyRelativeFilenameCmd)
 }
 
 function deactivate() {}

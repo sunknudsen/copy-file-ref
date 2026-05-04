@@ -2,7 +2,7 @@
   "name": "claude-code-utils",
   "displayName": "Claude Code Utils",
   "description": "Utilities for working with Claude Code",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "local",
   "license": "MIT",
   "author": {
@@ -22,6 +22,7 @@
   "main": "./src/extension.js",
   "activationEvents": [
     "onCommand:claude-code-utils.copyFileName",
+    "onCommand:claude-code-utils.copyRelativeFilename",
     "onCommand:claude-code-utils.copyCodeRef"
   ],
   "contributes": {
@@ -29,6 +30,10 @@
       {
         "command": "claude-code-utils.copyFileName",
         "title": "Copy Filename"
+      },
+      {
+        "command": "claude-code-utils.copyRelativeFilename",
+        "title": "Copy Relative Filename"
       },
       {
         "command": "claude-code-utils.copyCodeRef",
@@ -43,6 +48,12 @@
         "when": "editorTextFocus"
       },
       {
+        "command": "claude-code-utils.copyRelativeFilename",
+        "key": "ctrl+alt+shift+r",
+        "mac": "cmd+alt+shift+r",
+        "when": "editorTextFocus"
+      },
+      {
         "command": "claude-code-utils.copyCodeRef",
         "key": "ctrl+alt+shift+c",
         "mac": "cmd+alt+shift+c",
@@ -54,12 +65,20 @@
         {
           "command": "claude-code-utils.copyFileName",
           "group": "9_cutcopypaste@10"
+        },
+        {
+          "command": "claude-code-utils.copyRelativeFilename",
+          "group": "9_cutcopypaste@11"
         }
       ],
       "editor/context": [
         {
-          "command": "claude-code-utils.copyCodeRef",
+          "command": "claude-code-utils.copyRelativeFilename",
           "group": "z_claudeCodeUtils@1"
+        },
+        {
+          "command": "claude-code-utils.copyCodeRef",
+          "group": "z_claudeCodeUtils@2"
         }
       ]
     }
