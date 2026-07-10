@@ -102,10 +102,12 @@
     }
   },
   "scripts": {
+    "ncu": "ncu --target minor --upgrade",
     "package": "vsce package --no-dependencies"
   },
   "devDependencies": {
-    "@vscode/vsce": "^3.7.1"
+    "@vscode/vsce": "^3.9.2",
+    "npm-check-updates": "^22.2.9"
   },
   "prettier": {
     "endOfLine": "lf",
