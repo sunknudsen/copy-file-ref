@@ -1,6 +1,38 @@
 const vscode = require("vscode")
 const path = require("path")
 
+// The API does not expose the explorer selection, so explorer keybindings
+// pass { source: "explorer" } and the selection is recovered through the
+// built-in copyFilePath command (safe since the clipboard is overwritten
+// with our result anyway)
+async function resolveFileUris(arg) {
+  if (arg instanceof vscode.Uri) return [arg]
+
+  if (arg?.source === "explorer") {
+    await vscode.commands.executeCommand("copyFilePath")
+    const text = await vscode.env.clipboard.readText()
+    return text
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((filePath) => vscode.Uri.file(filePath))
+  }
+
+  const editorUri = vscode.window.activeTextEditor?.document.uri
+  return editorUri ? [editorUri] : []
+}
+
+// Get relative path from workspace root
+function getRelativeFilePath(fileUri) {
+  const workspaceFolder = vscode.workspace.getWorkspaceFolder(fileUri)
+  if (!workspaceFolder) return fileUri.fsPath
+
+  const prefix =
+    vscode.workspace.workspaceFolders?.length > 1
+      ? `${workspaceFolder.name}/`
+      : ""
+  return prefix + path.relative(workspaceFolder.uri.fsPath, fileUri.fsPath)
+}
+
 function activate(context) {
   const copyCodeRefCmd = vscode.commands.registerCommand(
     "claude-code-utils.copyCodeRef",
@@ -11,15 +43,7 @@ function activate(context) {
       const doc = editor.document
       const sel = editor.selection
 
-      // Get relative path from workspace root
-      const workspaceFolder = vscode.workspace.getWorkspaceFolder(doc.uri)
-      const prefix =
-        vscode.workspace.workspaceFolders?.length > 1
-          ? `${workspaceFolder.name}/`
-          : ""
-      const filePath = workspaceFolder
-        ? prefix + path.relative(workspaceFolder.uri.fsPath, doc.uri.fsPath)
-        : doc.uri.fsPath
+      const filePath = getRelativeFilePath(doc.uri)
 
       // Lines are 0-indexed internally, +1 for human-readable
       const startLine = sel.start.line + 1
@@ -40,15 +64,16 @@ function activate(context) {
 
   const copyFileNameCmd = vscode.commands.registerCommand(
     "claude-code-utils.copyFileName",
-    (uri) => {
-      // Use URI from context menu (explorer) or active editor
-      const fileUri = uri || vscode.window.activeTextEditor?.document.uri
-      if (!fileUri) return
+    async (arg) => {
+      const fileUris = await resolveFileUris(arg)
+      if (!fileUris.length) return
 
-      const filename = path.basename(fileUri.fsPath)
+      const filenames = fileUris
+        .map((fileUri) => path.basename(fileUri.fsPath))
+        .join("\n")
 
-      vscode.env.clipboard.writeText(filename).then(() => {
-        vscode.window.setStatusBarMessage(`📋 Copied: ${filename}`, 3000)
+      vscode.env.clipboard.writeText(filenames).then(() => {
+        vscode.window.setStatusBarMessage(`📋 Copied: ${filenames}`, 3000)
       })
     }
   )
@@ -57,23 +82,16 @@ function activate(context) {
 
   const copyRelativeFilenameCmd = vscode.commands.registerCommand(
     "claude-code-utils.copyRelativeFilename",
-    (uri) => {
-      // Use URI from context menu (explorer) or active editor
-      const fileUri = uri || vscode.window.activeTextEditor?.document.uri
-      if (!fileUri) return
+    async (arg) => {
+      const fileUris = await resolveFileUris(arg)
+      if (!fileUris.length) return
 
-      // Get relative path from workspace root
-      const workspaceFolder = vscode.workspace.getWorkspaceFolder(fileUri)
-      const prefix =
-        vscode.workspace.workspaceFolders?.length > 1
-          ? `${workspaceFolder.name}/`
-          : ""
-      const filePath = workspaceFolder
-        ? prefix + path.relative(workspaceFolder.uri.fsPath, fileUri.fsPath)
-        : fileUri.fsPath
+      const filePaths = fileUris
+        .map((fileUri) => getRelativeFilePath(fileUri))
+        .join("\n")
 
-      vscode.env.clipboard.writeText(filePath).then(() => {
-        vscode.window.setStatusBarMessage(`📋 Copied: ${filePath}`, 3000)
+      vscode.env.clipboard.writeText(filePaths).then(() => {
+        vscode.window.setStatusBarMessage(`📋 Copied: ${filePaths}`, 3000)
       })
     }
   )

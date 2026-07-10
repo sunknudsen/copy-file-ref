@@ -48,10 +48,28 @@
         "when": "editorTextFocus"
       },
       {
+        "command": "claude-code-utils.copyFileName",
+        "key": "ctrl+alt+shift+f",
+        "mac": "cmd+alt+shift+f",
+        "when": "filesExplorerFocus && !inputFocus",
+        "args": {
+          "source": "explorer"
+        }
+      },
+      {
         "command": "claude-code-utils.copyRelativeFilename",
         "key": "ctrl+alt+shift+r",
         "mac": "cmd+alt+shift+r",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "claude-code-utils.copyRelativeFilename",
+        "key": "ctrl+alt+shift+r",
+        "mac": "cmd+alt+shift+r",
+        "when": "filesExplorerFocus && !inputFocus",
+        "args": {
+          "source": "explorer"
+        }
       },
       {
         "command": "claude-code-utils.copyCodeRef",

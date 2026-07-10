@@ -6,9 +6,9 @@ Utilities for working with Claude Code.
 
 ### Copy Filename
 
-Copy the current file’s name to clipboard.
+Copy the file’s name to clipboard (current file in editor or selected files in explorer).
 
-**Output format:** `foo.ts`
+**Output format:** `foo.ts` (one name per line when more than one file is selected)
 
 **Usage:**
 
@@ -17,9 +17,9 @@ Copy the current file’s name to clipboard.
 
 ### Copy Relative Filename
 
-Copy the current file's relative path to clipboard, including workspace folder name in multi-root workspaces.
+Copy the file's relative path to clipboard (current file in editor or selected files in explorer), including workspace folder name in multi-root workspaces.
 
-**Output format:** `src/foo.ts` or `backend/src/foo.ts` (multi-root)
+**Output format:** `src/foo.ts` or `backend/src/foo.ts` (multi-root), one path per line when more than one file is selected
 
 **Usage:**
 
